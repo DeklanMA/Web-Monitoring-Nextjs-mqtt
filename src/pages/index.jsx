@@ -99,9 +99,13 @@ export default function Page() {
   return (
     <Layout>
       <div className="container mx-auto no-scrollbar grid-flow-col col-end-1 justify-center ">
-        <h1 className="font-bold text-xl pt-7 pl-3 pb-5 text-black">
-          Dashboard
-        </h1>
+        <div className="flex flex-col">
+          <h1 className="font-bold text-xl pt-7 pl-3 pb-2 text-black">
+            Dashboard
+          </h1>
+          <h1 className="text-xl  pl-3   ">Name : Syaira Maharani</h1>
+          <h1 className="text-xl  pl-3 pb-3  ">NIM : 211331028</h1>
+        </div>
         <div className="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-4 pb-8 gap-4">
           <div className="card w-full col-span-2 bg-slate-50 shadow-xl row-span-2 h-full">
             <div className="card-body">
@@ -196,7 +200,6 @@ export default function Page() {
               <div className="border-b-2 flex flex-col">
                 <h2 className="card-title text-black pl-5 ">Grafik</h2>
                 <h2 className=" pl-5 pb- ">Real-Time Chart</h2>
-                
               </div>
               <div>
                 <Suspense>
