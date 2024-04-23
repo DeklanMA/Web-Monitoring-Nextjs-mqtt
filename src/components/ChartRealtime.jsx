@@ -23,6 +23,7 @@ export default function RealtimeChart() {
       },
       xaxis: {
         type: 'category',
+        categories: [], // Gunakan array ini untuk menyimpan label waktu
         labels: {
           formatter: function (val) {
             return moment(val).format('HH:mm'); // Mengambil jam dan menit dari waktu
@@ -40,6 +41,7 @@ export default function RealtimeChart() {
       },
     },
     series: [{ name: 'Real-time Jarak', data: [] }],
+    timestamps: [], // Array untuk menyimpan data waktu
   });
 
   const mqttClient = useMQTTConnection();
@@ -54,36 +56,37 @@ export default function RealtimeChart() {
           const timestamp = moment().tz('Asia/Jakarta').format(); // Waktu penerimaan pesan
 
           // Perbarui data series dengan data yang baru
-          setDataSample((prevData) => ({
-            ...prevData,
-            series: [
-              {
-                name: 'Real-time Jarak',
-                data: [...prevData.series[0].data, { x: timestamp, y: level }],
-              },
-            ],
-          }));
+          setDataSample((prevData) => {
+            let updatedData = [
+              ...prevData.series[0].data,
+              { x: timestamp, y: level },
+            ];
+            let updatedTimestamps = [...prevData.timestamps, timestamp]; // Simpan timestamp
+
+            // Hapus data lama jika sudah lebih dari 4 label waktu
+            if (prevData.timestamps.length > 4) {
+              updatedData = updatedData.slice(1);
+              updatedTimestamps = updatedTimestamps.slice(1);
+            }
+
+            return {
+              ...prevData,
+              series: [
+                {
+                  name: 'Real-time Jarak',
+                  data: updatedData,
+                },
+              ],
+              timestamps: updatedTimestamps, // Simpan array timestamp yang diperbarui
+            };
+          });
         }
       });
     }
   }, [mqttClient]);
 
-  // Jika tidak ada data, tambahkan data 0 ke series Real-time
-  useEffect(() => {
-    const timer = setInterval(() => {
-      const timestamp = moment().tz('Asia/Jakarta').format(); // Waktu penerimaan pesan
-      setDataSample((prevData) => ({
-        ...prevData,
-        series: prevData.series.map((serie, index) => {
-          if (index === 0 && serie.data.length === 0) {
-            return { ...serie, data: [{ x: timestamp, y: 0 }] };
-          }
-          return serie;
-        }),
-      }));
-    }, 5000); // Frekuensi pengecekan, misalnya setiap 5 detik
-    return () => clearInterval(timer);
-  }, []);
+
+ 
 
   return (
     <div>
