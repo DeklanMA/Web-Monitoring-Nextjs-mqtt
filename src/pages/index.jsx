@@ -103,8 +103,6 @@ export default function Page() {
           <h1 className="font-bold text-xl pt-7 pl-3 pb-2 text-black">
             Dashboard
           </h1>
-          <h1 className="text-xl  pl-3   ">Name : Syaira Maharani</h1>
-          <h1 className="text-xl  pl-3 pb-3  ">NIM : 211331028</h1>
         </div>
         <div className="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-4 pb-8 gap-4">
           <div className="card w-full col-span-2 bg-slate-50 shadow-xl row-span-2 h-full">
@@ -112,6 +110,7 @@ export default function Page() {
               <h2 className="card-title text-black pl-5 border-b-2 ">
                 <BsCamera />
                 <span> Camera</span>
+               
               </h2>
               <div className="items-center justify-center flex">
                 <div className="content-border w-72 h-72 bg-gray-200 flex items-center justify-center">
