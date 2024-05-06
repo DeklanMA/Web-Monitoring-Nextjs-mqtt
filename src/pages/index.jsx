@@ -93,7 +93,13 @@ export default function Page() {
      console.log(`Published message to topic 'ione/pompa': ${newStatus}`);
    }
  };
-
+ const renderChart = () => {
+   if (filter === 'average' || filter === 'max') {
+     return <BarChart filter={filter} />;
+   } else {
+     return <RealtimeChart />;
+   }
+ };
  
 
   return (
@@ -110,7 +116,6 @@ export default function Page() {
               <h2 className="card-title text-black pl-5 border-b-2 ">
                 <BsCamera />
                 <span> Camera</span>
-               
               </h2>
               <div className="items-center justify-center flex">
                 <div className="content-border w-72 h-72 bg-gray-200 flex items-center justify-center">
@@ -142,6 +147,34 @@ export default function Page() {
               </div>
             </div>
           </div>
+          <div className="card w-full col-span-2 bg-slate-50 shadow-xl mb-">
+            <div className="card-body ">
+              <div className="border-b-2 flex flex-grow">
+                <h2 className="card-title text-black pl-5 ">Grafik</h2>
+                <div className="mt-4 bg-white ml-auto pb-2">
+                  <label htmlFor="filterDropdown ">Filter:</label>
+                  <select
+                    id="filterDropdown"
+                    className="ml-2 border bg-white rounded-md px-2 py-1"
+                    onChange={(e) => setFilter(e.target.value)}
+                  >
+                    <option value="average">Rata-rata</option>
+                    <option value="max">Tertinggi</option>
+                    <option value="realtime">Realtime</option>
+                  </select>
+                </div>
+              </div>
+              <div>
+                <Suspense>
+                  {filter === 'average' || filter === 'max' ? (
+                    <BarChart filter={filter} />
+                  ) : (
+                    <RealtimeChart />
+                  )}
+                </Suspense>
+              </div>
+            </div>
+          </div>
           <div className="card w-full col-span-2  bg-slate-50 shadow-xl  ">
             <div className="card-body">
               <div className="w-full">
@@ -168,42 +201,6 @@ export default function Page() {
                     ))}
                   </tbody>
                 </table>
-              </div>
-            </div>
-          </div>
-          <div className="card w-full col-span-2 bg-slate-50 shadow-xl mb-">
-            <div className="card-body ">
-              <div className="border-b-2 flex flex-grow">
-                <h2 className="card-title text-black pl-5 ">Grafik</h2>
-                <div className="mt-4 bg-white ml-auto pb-2">
-                  <label htmlFor="filterDropdown ">Filter:</label>
-                  <select
-                    id="filterDropdown"
-                    className="ml-2 border bg-white rounded-md px-2 py-1"
-                    onChange={(e) => setFilter(e.target.value)}
-                  >
-                    <option value="average">Rata-rata</option>
-                    <option value="max">Tertinggi</option>
-                  </select>
-                </div>
-              </div>
-              <div>
-                <Suspense>
-                  <BarChart filter={filter} />
-                </Suspense>
-              </div>
-            </div>
-          </div>
-          <div className="card w-full col-span-2 bg-slate-50 shadow-xl mb-">
-            <div className="card-body ">
-              <div className="border-b-2 flex flex-col">
-                <h2 className="card-title text-black pl-5 ">Grafik</h2>
-                <h2 className=" pl-5 pb- ">Real-Time Chart</h2>
-              </div>
-              <div>
-                <Suspense>
-                  <RealtimeChart />
-                </Suspense>
               </div>
             </div>
           </div>
