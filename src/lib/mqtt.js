@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import mqtt from 'mqtt';
 
-const brokerUrl = 'wss://broker.hivemq.com:8000/mqtt';
+const brokerUrl = 'wss://broker.hivemq.com:8884/mqtt';
 // const username = 'web_iot';
 // const password = 'Web_monitoring1';
 
