@@ -28,7 +28,7 @@ export default function Page() {
       mqttClient.subscribe('ione/pompa');
       mqttClient.subscribe('ione/camera');
       mqttClient.subscribe('ione/lampu');
-
+      mqttClient.subscribe('ione/pompamanual');
 
       mqttClient.on('connect', () => {
         // Tambahkan log saat berhasil terhubung ke broker MQTT
@@ -103,13 +103,14 @@ export default function Page() {
     }
   }, [mqttClient]);
 
-  const handleButtonClick = () => {
-    if (mqttClient) {
-      const newStatus = isOn ? 'off' : 'on';
-      mqttClient.publish('ione/pompa', newStatus);
-      console.log(`Published message to topic 'ione/pompa': ${newStatus}`);
-    }
-  };
+ const handleButtonClick = () => {
+   if (mqttClient) {
+     const newStatus = isOn ? 'off' : 'on';
+     mqttClient.publish('ione/pompamanual', newStatus);
+     console.log(`Published message to topic 'ione/pompamanual': ${newStatus}`);
+     setIsOn(!isOn); // Toggle the state
+   }
+ };
   const handleButtonClick1 = () => {
     if (mqttClient) {
       const newStatus = isOn1 ? 'off' : 'on';
